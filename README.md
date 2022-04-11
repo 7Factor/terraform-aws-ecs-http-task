@@ -17,7 +17,9 @@ We also assume that you're deploying an application behind an ALB to port 443 (a
 
 ```hcl-terraform
 module "terraform-ecs-task" {
-  source                = "git::https://github.com/7Factor/terraform-ecs-task.git"
+  source  = "7Factor/ecs-http-task/aws"
+  version = "0.1.0"
+
   vpc_id                = "${data.aws_vpc.primary_vpc.id}"
   alb_subnets           = "${data.aws_subnet_ids.subnet_ids.ids}"
   lb_security_group_id  = "${data.aws_security_group.primary_sg.id}"
