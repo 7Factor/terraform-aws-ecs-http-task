@@ -10,9 +10,26 @@ variable "cluster_name" {
 }
 
 // Load balancer configuration
+variable "lb_internal" {
+  description = "Switch for setting your LB to be internal. Defaults to false."
+  type        = bool
+  default     = false
+}
+
+variable "lb_security_groups" {
+  description = "The id of the ECS cluster load balancer security group."
+  type        = list(any)
+}
+
 variable "lb_subnets" {
   type        = list(any)
   description = "The list of subnet IDs to attach to the LB. Should be public for external LB (the default)."
+}
+
+variable "lb_idle_timeout" {
+  description = "The time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60."
+  type        = number
+  default     = 60
 }
 
 variable "lb_security_policy" {
@@ -26,39 +43,22 @@ variable "lb_certificate_arn" {
   type        = string
 }
 
-variable "lb_security_groups" {
-  description = "The id of the ECS cluster load balancer security group."
-  type        = list(any)
-}
-
-variable "lb_internal" {
-  description = "Switch for setting your LB to be internal. Defaults to false."
-  type        = bool
-  default     = false
-}
-
 variable "lb_secure_listener_redirect" {
   description = "Switch the secure redict from 80 to 443 on or off. On by default because this is a good idea, but you can turn it off if you have a weird edge case."
   type        = bool
   default     = "true"
 }
 
-variable "lb_access_logs_bucket" {
-  description = "The bucket to log alb access logs to."
-  type        = string
-  default     = ""
-}
-
-variable "lb_idle_timeout" {
-  description = "The time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60."
-  type        = number
-  default     = 60
-}
-
 variable "lb_access_logs_enabled" {
   description = "Flag for controlling alb access logs."
   type        = bool
   default     = false
+}
+
+variable "lb_access_logs_bucket" {
+  description = "The bucket to log alb access logs to."
+  type        = string
+  default     = ""
 }
 
 // Health check (defaults to something sane)
