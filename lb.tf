@@ -4,7 +4,7 @@ module "app_lb" {
   cluster_name             = var.cluster_name
   app_name                 = var.app_name
   target_group_arn         = aws_lb_target_group.lb_targets.arn
-  security_groups          = [var.lb_security_groups]
+  security_groups          = var.lb_security_groups
   subnets                  = var.lb_subnets
   internal                 = var.lb_internal
   idle_timeout             = var.lb_idle_timeout
