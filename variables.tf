@@ -32,7 +32,7 @@ variable "lb_idle_timeout" {
   default     = 60
 }
 
-variable "lb_security_policy" {
+variable "lb_ssl_policy" {
   description = "Name of the SSL Policy for the LB's HTTPS listener."
   type        = string
   default     = "ELBSecurityPolicy-FS-2018-06"
@@ -206,6 +206,7 @@ variable "ordered_placement_strategies" {
   ]
 }
 
+// Circuit breaker configuration
 variable "circuit_breaker_enabled" {
   description = "Should we enable deployment circuit breakers? Defaults to false."
   type        = bool

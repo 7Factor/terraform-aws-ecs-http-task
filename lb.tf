@@ -8,7 +8,7 @@ module "app_lb" {
   security_groups          = var.lb_security_groups
   subnets                  = var.lb_subnets
   idle_timeout             = var.lb_idle_timeout
-  ssl_policy               = var.lb_security_policy
+  ssl_policy               = var.lb_ssl_policy
   certificate_arn          = var.lb_certificate_arn
   secure_listener_redirect = var.lb_secure_listener_redirect
   access_logs_enabled      = var.lb_access_logs_enabled
