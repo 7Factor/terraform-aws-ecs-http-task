@@ -1,9 +1,9 @@
 module "app_lb" {
   source = "github.com/7Factor/terraform-aws-app-load-balancer"
 
-  cluster_name             = var.cluster_name
-  app_name                 = var.app_name
-  target_group_arn         = aws_lb_target_group.lb_targets.arn
+  cluster_name = var.cluster_name
+  app_name     = var.app_name
+
   security_groups          = var.lb_security_groups
   subnets                  = var.lb_subnets
   internal                 = var.lb_internal
@@ -13,6 +13,8 @@ module "app_lb" {
   ssl_policy               = var.lb_security_policy
   certificate_arn          = var.lb_certificate_arn
   secure_listener_redirect = var.lb_secure_listener_redirect
+
+  target_group_arn = aws_lb_target_group.lb_targets.arn
 }
 
 resource "aws_lb_target_group" "lb_targets" {
