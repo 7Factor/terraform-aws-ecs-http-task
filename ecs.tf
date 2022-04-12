@@ -46,6 +46,15 @@ resource "aws_ecs_service" "main_service" {
     target_group_arn = aws_lb_target_group.lb_targets.arn
   }
 
+  dynamic "load_balancer" {
+    for_each = range(var.additional_lb_target_groups)
+    content {
+      container_name   = var.app_name
+      container_port   = var.app_port
+      target_group_arn = aws_lb_target_group.additional_lb_targets[load_balancer.key].arn
+    }
+  }
+
   depends_on = [aws_lb.app_lb]
 
   dynamic "ordered_placement_strategy" {
