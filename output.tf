@@ -37,3 +37,7 @@ output "task_definition_arn" {
 output "service_name" {
   value = aws_ecs_service.main_service.name
 }
+
+output "additional_lb_target_group_arns" {
+  value = aws_lb_target_group.additional_lb_targets[*].arn
+}
