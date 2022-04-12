@@ -11,35 +11,35 @@ variable "cluster_name" {
 
 // Load balancer configuration
 variable "lb_internal" {
-  description = "Switch for setting your LB to be internal. Defaults to false."
+  description = "If true, the LB will be internal."
   type        = bool
   default     = false
 }
 
 variable "lb_security_groups" {
-  description = "The id of the ECS cluster load balancer security group."
+  description = "A list of security group IDs to assigned to the LB."
   type        = list(any)
 }
 
 variable "lb_subnets" {
   type        = list(any)
-  description = "The list of subnet IDs to attach to the LB. Should be public for external LB (the default)."
+  description = "A list of subnet IDs to attach to the LB. Should be public for external LB (the default)."
 }
 
 variable "lb_idle_timeout" {
-  description = "The time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60."
+  description = "The time in seconds that a connection to the LB is allowed to be idle."
   type        = number
   default     = 60
 }
 
 variable "lb_security_policy" {
-  description = "Security policy for the load balancer. Defaults to something interesting."
+  description = "Name of the SSL Policy for the LB's HTTPS listener."
   type        = string
   default     = "ELBSecurityPolicy-FS-2018-06"
 }
 
 variable "lb_certificate_arn" {
-  description = "Certificate ARN for securing HTTPS on our load balancer. We will automagically set up a redirect from 80."
+  description = "ARN of the default SSL server certificate for the LB's HTTPS listener. We will automagically set up a redirect from 80."
   type        = string
 }
 
@@ -50,13 +50,13 @@ variable "lb_secure_listener_redirect" {
 }
 
 variable "lb_access_logs_enabled" {
-  description = "Flag for controlling alb access logs."
+  description = "If true, LB access logs will be stored in the S3 bucket defined in lb_access_logs_bucket."
   type        = bool
   default     = false
 }
 
 variable "lb_access_logs_bucket" {
-  description = "The bucket to log alb access logs to."
+  description = "The S3 bucket to store LB access logs in."
   type        = string
   default     = ""
 }
