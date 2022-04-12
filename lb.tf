@@ -89,7 +89,7 @@ resource "aws_lb_target_group" "lb_targets" {
 resource "aws_lb_target_group" "additional_lb_targets" {
   count = var.additional_lb_target_groups
 
-  name                 = substr("tg-${count.index}-${var.cluster_name}-${var.app_name}", 0, min(length("lb-${var.cluster_name}-${var.app_name}"), 32))
+  name                 = substr("tg-${count.index}-${var.cluster_name}-${var.app_name}", 0, min(length("lb-${count.index}-${var.cluster_name}-${var.app_name}"), 32))
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
