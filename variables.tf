@@ -10,9 +10,9 @@ variable "cluster_name" {
 }
 
 // Load balancer configuration
-variable "lb_public_subnets" {
+variable "lb_subnets" {
   type        = list(any)
-  description = "The list of subnet IDs to attach to the LB. Should be public."
+  description = "The list of subnet IDs to attach to the LB. Should be public for external LB (the default)."
 }
 
 variable "lb_security_policy" {
@@ -21,7 +21,7 @@ variable "lb_security_policy" {
   default     = "ELBSecurityPolicy-FS-2018-06"
 }
 
-variable "lb_cert_arn" {
+variable "lb_certificate_arn" {
   description = "Certificate ARN for securing HTTPS on our load balancer. We will automagically set up a redirect from 80."
   type        = string
 }
@@ -32,36 +32,36 @@ variable "lb_ingress_cidr" {
   default     = "0.0.0.0/0"
 }
 
-variable "cluster_lb_sg_id" {
+variable "lb_security_groups" {
   description = "The id of the ECS cluster load balancer security group."
-  type        = string
+  type        = list(any)
 }
 
-variable "is_lb_internal" {
+variable "lb_internal" {
   description = "Switch for setting your LB to be internal. Defaults to false."
   type        = bool
   default     = false
 }
 
-variable "secure_listener_enabled" {
+variable "lb_secure_listener_redirect" {
   description = "Switch the secure redict from 80 to 443 on or off. On by default because this is a good idea, but you can turn it off if you have a weird edge case."
   type        = bool
   default     = "true"
 }
 
-variable "alb_access_logs_bucket" {
+variable "lb_access_logs_bucket" {
   description = "The bucket to log alb access logs to."
   type        = string
   default     = ""
 }
 
-variable "idle_timeout" {
+variable "lb_idle_timeout" {
   description = "The time in seconds that the connection is allowed to be idle. Only valid for Load Balancers of type application. Default: 60."
   type        = number
   default     = 60
 }
 
-variable "alb_access_logs_enabled" {
+variable "lb_access_logs_enabled" {
   description = "Flag for controlling alb access logs."
   type        = bool
   default     = false

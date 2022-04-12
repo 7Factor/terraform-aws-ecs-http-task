@@ -4,15 +4,15 @@ module "app_lb" {
   cluster_name             = var.cluster_name
   app_name                 = var.app_name
   target_group_arn         = aws_lb_target_group.lb_targets.arn
-  security_groups          = [var.cluster_lb_sg_id]
-  subnets                  = var.lb_public_subnets
-  internal                 = var.is_lb_internal
-  idle_timeout             = var.idle_timeout
-  access_logs_enabled      = var.alb_access_logs_enabled
-  access_logs_bucket       = var.alb_access_logs_bucket
+  security_groups          = [var.lb_security_groups]
+  subnets                  = var.lb_subnets
+  internal                 = var.lb_internal
+  idle_timeout             = var.lb_idle_timeout
+  access_logs_enabled      = var.lb_access_logs_enabled
+  access_logs_bucket       = var.lb_access_logs_bucket
   ssl_policy               = var.lb_security_policy
-  certificate_arn          = var.lb_cert_arn
-  secure_listener_redirect = var.secure_listener_enabled
+  certificate_arn          = var.lb_certificate_arn
+  secure_listener_redirect = var.lb_secure_listener_redirect
 }
 
 resource "aws_lb_target_group" "lb_targets" {
