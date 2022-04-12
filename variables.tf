@@ -175,7 +175,7 @@ variable "launch_type" {
 
 variable "volumes" {
   description = "A list of definitions to attach volumes to the ECS task. Amazon does not allow empty volume names once declared, so defaulting to a dummy name if this var is left unused."
-  type        = list(object({
+  type = list(object({
     name      = string
     host_path = string
   }))
@@ -190,7 +190,7 @@ variable "task_role_arn" {
 
 variable "ordered_placement_strategies" {
   description = "The placement strategies used for the ECS service. Defaults to the most highly available `spread` algorithm for backward compatibility. Specify a different strategy such as `binpack` for better cost-efficiency."
-  type        = list(object({
+  type = list(object({
     type  = string
     field = string
   }))
