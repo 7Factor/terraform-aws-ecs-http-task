@@ -8,7 +8,7 @@ resource "aws_cloudwatch_event_rule" "ecs_task_deployment_failure" {
     detail-type = ["ECS Deployment State Change"]
     source      = ["aws.ecs"]
     resources   = [data.aws_ecs_service.main_service.arn]
-    detail      = {
+    detail = {
       eventType = ["ERROR"]
       eventName = ["SERVICE_DEPLOYMENT_FAILED"]
     }
