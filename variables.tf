@@ -26,12 +26,6 @@ variable "lb_certificate_arn" {
   type        = string
 }
 
-variable "lb_ingress_cidr" {
-  description = "CIDR to allow access to this load balancer. Allows white listing of IPs if you need that kind of thing, otherwise it just defaults to erebody."
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
 variable "lb_security_groups" {
   description = "The id of the ECS cluster load balancer security group."
   type        = list(any)
