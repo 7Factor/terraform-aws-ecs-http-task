@@ -1,5 +1,6 @@
 module "app_lb" {
-  source = "github.com/7Factor/terraform-aws-app-load-balancer"
+  source  = "7Factor/ecs-app-lb/aws"
+  version = "~> 1"
 
   cluster_name = var.cluster_name
   app_name     = var.app_name
