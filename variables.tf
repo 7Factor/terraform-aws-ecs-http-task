@@ -56,6 +56,12 @@ variable "alb_access_logs_enabled" {
   description = "Flag for controlling alb access logs."
 }
 
+variable "additional_lb_target_groups" {
+  description = "Specify how many additional LB target groups are desired."
+  type        = number
+  default     = 0
+}
+
 // Health check (defaults to something sane)
 variable "health_check_grace_period" {
   default     = 45
