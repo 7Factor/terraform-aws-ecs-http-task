@@ -1,21 +1,21 @@
 output "lb_hostname" {
-  value = aws_lb.app_lb.dns_name
+  value = module.app_lb.hostname
 }
 
 output "lb_name" {
-  value = aws_lb.app_lb.name
+  value = module.app_lb.name
 }
 
 output "lb_arn" {
-  value = aws_lb.app_lb.arn
+  value = module.app_lb.arn
 }
 
 output "lb_arn_suffix" {
-  value = aws_lb.app_lb.arn_suffix
+  value = module.app_lb.arn_suffix
 }
 
 output "lb_secure_listener" {
-  value = aws_lb_listener.secure_listener.arn
+  value = module.app_lb.secure_listener_arn
 }
 
 output "lb_target_group_name" {
@@ -27,7 +27,7 @@ output "health_check_path" {
 }
 
 output "lb_zone_id" {
-  value = aws_lb.app_lb.zone_id
+  value = module.app_lb.zone_id
 }
 
 output "task_definition_arn" {
