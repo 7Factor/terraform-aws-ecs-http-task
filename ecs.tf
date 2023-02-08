@@ -42,6 +42,20 @@ resource "aws_ecs_service" "main_service" {
     rollback = var.circuit_breaker_rollback_enabled
   }
 
+  dynamic "network_configuration" {
+    for_each = [for n in var.network_configurations : {
+      subnets          = n.subnets
+      security_groups  = n.security_groups
+      assign_public_ip = n.assign_public_ip
+    }]
+
+    content {
+      subnets          = network_configuration.value.subnets
+      security_groups  = network_configuration.value.security_groups
+      assign_public_ip = network_configuration.value.assign_public_ip
+    }
+  }
+  
   load_balancer {
     container_name   = var.app_name
     container_port   = var.app_port
