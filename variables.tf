@@ -118,7 +118,7 @@ variable "app_port" {
 }
 
 
-variable "network_type" {
+variable "network_mode" {
   type        = string
   default     = "bridge"
   description = "The networking behavior of ECS tasks, needs to be set to awsvpc for Fargate instances"
