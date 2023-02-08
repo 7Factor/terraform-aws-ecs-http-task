@@ -117,6 +117,13 @@ variable "app_port" {
   description = "The port you want you open on your instances. We make no assumptions here."
 }
 
+
+variable "network_type" {
+  type        = string
+  default     = "bridge"
+  description = "The networking behavior of ECS tasks, needs to be set to awsvpc for Fargate instances"
+}
+
 variable "cpu" {
   default     = 256
   description = "The number of cpu units used by the task."
