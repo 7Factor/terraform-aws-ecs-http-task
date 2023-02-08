@@ -11,6 +11,7 @@ resource "aws_ecs_task_definition" "main_task" {
   container_definitions    = var.container_definition
 
   task_role_arn = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
 
   dynamic "volume" {
     for_each = [for v in var.volumes : {
