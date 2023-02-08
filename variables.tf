@@ -213,3 +213,9 @@ variable "circuit_breaker_sns_topic_arn" {
   default     = null
   description = "The arn of the SNS topic to publish deployment circuit breaker failure messages to. If not provided, a SNS topic will be provided by this module."
 }
+
+variable "lb_target_type" {
+  type        = string
+  default     = "instance"
+  description = "The target type of the LBs, needs to be set to IP for fargate"
+}
