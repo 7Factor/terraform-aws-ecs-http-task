@@ -160,6 +160,10 @@ variable "service_deployment_minimum_healthy_percent" {
 variable "launch_type" {
   default     = "EC2"
   description = "The launch type for the task. We assume EC2 by default."
+  validation {
+    condition     = contains(["EC2", "FARGATE"], var.launch_type)
+    error_message = "Only EC2 and FARGATE are supported as launch types by this module."
+  }
 }
 
 variable "volumes" {
