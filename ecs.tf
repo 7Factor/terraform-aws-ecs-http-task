@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "main_task" {
   memory                   = var.memory
   container_definitions    = var.container_definition
 
-  task_role_arn = var.task_role_arn
+  task_role_arn      = var.task_role_arn
   execution_role_arn = var.execution_role_arn
 
   dynamic "volume" {
@@ -55,7 +55,7 @@ resource "aws_ecs_service" "main_service" {
       assign_public_ip = network_configuration.value.assign_public_ip
     }
   }
-  
+
   load_balancer {
     container_name   = var.app_name
     container_port   = var.app_port
