@@ -5,12 +5,13 @@ data "aws_ecs_cluster" "target_cluster" {
 resource "aws_ecs_task_definition" "main_task" {
   family                   = "${var.app_name}-tsk"
   requires_compatibilities = [var.launch_type]
-  network_mode             = "bridge"
+  network_mode             = var.launch_type == "FARGATE " ? "awsvpc" : var.network_mode
   cpu                      = var.cpu
   memory                   = var.memory
   container_definitions    = var.container_definition
 
-  task_role_arn = var.task_role_arn
+  task_role_arn      = var.task_role_arn
+  execution_role_arn = var.execution_role_arn
 
   dynamic "volume" {
     for_each = [for v in var.volumes : {
@@ -39,6 +40,20 @@ resource "aws_ecs_service" "main_service" {
   deployment_circuit_breaker {
     enable   = var.circuit_breaker_enabled
     rollback = var.circuit_breaker_rollback_enabled
+  }
+
+  dynamic "network_configuration" {
+    for_each = [for n in var.network_configurations : {
+      subnets          = n.subnets
+      security_groups  = n.security_groups
+      assign_public_ip = n.assign_public_ip
+    }]
+
+    content {
+      subnets          = network_configuration.value.subnets
+      security_groups  = network_configuration.value.security_groups
+      assign_public_ip = network_configuration.value.assign_public_ip
+    }
   }
 
   load_balancer {

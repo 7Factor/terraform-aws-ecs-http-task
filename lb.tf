@@ -67,7 +67,7 @@ resource "aws_lb_target_group" "lb_targets" {
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
-  target_type          = "instance"
+  target_type          = var.launch_type == "FARGATE " ? "ip" : var.lb_target_type
   deregistration_delay = "60"
 
   health_check {
@@ -93,7 +93,7 @@ resource "aws_lb_target_group" "additional_lb_targets" {
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
-  target_type          = "instance"
+  target_type          = var.launch_type == "FARGATE " ? "ip" : var.lb_target_type
   deregistration_delay = "60"
 
   health_check {

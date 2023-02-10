@@ -117,6 +117,13 @@ variable "app_port" {
   description = "The port you want you open on your instances. We make no assumptions here."
 }
 
+
+variable "network_mode" {
+  type        = string
+  default     = "bridge"
+  description = "The networking behavior of ECS tasks, needs to be set to awsvpc for Fargate instances"
+}
+
 variable "cpu" {
   default     = 256
   description = "The number of cpu units used by the task."
@@ -153,6 +160,10 @@ variable "service_deployment_minimum_healthy_percent" {
 variable "launch_type" {
   default     = "EC2"
   description = "The launch type for the task. We assume EC2 by default."
+  validation {
+    condition     = contains(["EC2", "FARGATE"], var.launch_type)
+    error_message = "Only EC2 and FARGATE are supported as launch types by this module."
+  }
 }
 
 variable "volumes" {
@@ -164,6 +175,11 @@ variable "volumes" {
 variable "task_role_arn" {
   default     = ""
   description = "The arn of the iam role you wish to pass to the ecs task containers."
+}
+
+variable "execution_role_arn" {
+  default     = ""
+  description = "This is required to run in fargate if you want to use the AWS cloudwatch log driver."
 }
 
 variable "ordered_placement_strategies" {
@@ -200,4 +216,20 @@ variable "circuit_breaker_sns_topic_arn" {
   type        = string
   default     = null
   description = "The arn of the SNS topic to publish deployment circuit breaker failure messages to. If not provided, a SNS topic will be provided by this module."
+}
+
+variable "network_configurations" {
+  type = list(object({
+    subnets          = list(string),
+    security_groups  = list(string),
+    assign_public_ip = bool
+  }))
+  default     = []
+  description = "A list of definitions to attach network configurations to the ECS task."
+}
+
+variable "lb_target_type" {
+  type        = string
+  default     = "instance"
+  description = "The target type of the LBs, needs to be set to IP for fargate"
 }
