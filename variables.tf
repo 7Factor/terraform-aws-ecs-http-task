@@ -215,7 +215,11 @@ variable "circuit_breaker_sns_topic_arn" {
 }
 
 variable "network_configurations" {
-  type        = list(object({ subnets = list(string), security_groups = list(string), assign_public_ip = bool }))
+  type = list(object({
+    subnets          = list(string),
+    security_groups  = list(string),
+    assign_public_ip = bool
+  }))
   default     = []
   description = "A list of definitions to attach network configurations to the ECS task."
 }
