@@ -24,6 +24,46 @@ resource "aws_ecs_task_definition" "main_task" {
       host_path = volume.value.host_path
     }
   }
+
+  dynamic "volume" {
+    for_each = [for v in var.efs_volumes : {
+      name                    = v.name
+      host_path               = v.host_path
+      file_system_id          = v.file_system_id
+      root_directory          = v.root_directory
+      transit_encryption      = v.transit_encryption
+      transit_encryption_port = v.transit_encryption_port
+
+      authorization_config = v.access_point_id == null && v.iam == null ? [] : [{
+        access_point_id = v.access_point_id
+        iam             = v.iam
+      }]
+    }]
+
+    content {
+      name      = volume.value.name
+      host_path = volume.value.host_path
+
+      efs_volume_configuration {
+        file_system_id          = volume.value.file_system_id
+        root_directory          = volume.value.root_directory
+        transit_encryption      = coalesce(volume.value.transit_encryption, "DISABLED")
+        transit_encryption_port = volume.value.transit_encryption_port
+
+        dynamic "authorization_config" {
+          for_each = [for a in volume.value.authorization_config : {
+            access_point_id = a.access_point_id
+            iam             = a.iam
+          }]
+
+          content {
+            access_point_id = authorization_config.value.access_point_id
+            iam             = authorization_config.value.iam
+          }
+        }
+      }
+    }
+  }
 }
 
 resource "aws_ecs_service" "main_service" {
