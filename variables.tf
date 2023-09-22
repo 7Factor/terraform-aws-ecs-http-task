@@ -175,13 +175,13 @@ variable "volumes" {
 variable "efs_volumes" {
   type = list(object({
     name                    = string
-    host_path               = string
+    host_path               = optional(string)
     file_system_id          = string
-    root_directory          = string
-    transit_encryption      = string
-    transit_encryption_port = number
-    access_point_id         = string
-    iam                     = string
+    root_directory          = optional(string)
+    transit_encryption      = optional(string)
+    transit_encryption_port = optional(number)
+    access_point_id         = optional(string)
+    iam                     = optional(string)
   }))
 
   default     = []
