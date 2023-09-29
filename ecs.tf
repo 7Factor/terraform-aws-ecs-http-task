@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "main_task" {
         transit_encryption_port = volume.value.transit_encryption_port
 
         dynamic "authorization_config" {
-          for_each = volume.value.authorization_config
+          for_each = [volume.value.authorization_config]
 
           content {
             access_point_id = authorization_config.value["access_point_id"]
