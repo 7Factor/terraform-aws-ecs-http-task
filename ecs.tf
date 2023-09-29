@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "main_task" {
       efs_volume_configuration {
         file_system_id          = volume.value.file_system_id
         root_directory          = volume.value.root_directory
-        transit_encryption      = coalesce(volume.value.transit_encryption, "DISABLED")
+        transit_encryption      = coalesce(volume.value.transit_encryption, volume.value.authorization_config != null ? "ENABLED" : "DISABLED")
         transit_encryption_port = volume.value.transit_encryption_port
 
         dynamic "authorization_config" {
