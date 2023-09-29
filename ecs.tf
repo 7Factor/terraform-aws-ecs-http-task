@@ -33,11 +33,7 @@ resource "aws_ecs_task_definition" "main_task" {
       root_directory          = v.root_directory
       transit_encryption      = v.transit_encryption
       transit_encryption_port = v.transit_encryption_port
-
-      authorization_config = v.access_point_id == null && v.iam == null ? [] : [{
-        access_point_id = v.access_point_id
-        iam             = v.iam
-      }]
+      authorization_config    = v.authorization_config
     }]
 
     content {
@@ -53,7 +49,7 @@ resource "aws_ecs_task_definition" "main_task" {
         dynamic "authorization_config" {
           for_each = [for a in volume.value.authorization_config : {
             access_point_id = a.access_point_id
-            iam             = a.iam
+            iam             = coalesce(a.iam, "DISABLED")
           }]
 
           content {
