@@ -172,6 +172,24 @@ variable "volumes" {
   description = "A list of definitions to attach volumes to the ECS task. Amazon does not allow empty volume names once declared, so defaulting to a dummy name if this var is left unused."
 }
 
+variable "efs_volumes" {
+  type = list(object({
+    name                    = string
+    host_path               = optional(string)
+    file_system_id          = string
+    root_directory          = optional(string)
+    transit_encryption      = optional(string)
+    transit_encryption_port = optional(number)
+    authorization_config    = optional(object({
+      access_point_id = optional(string)
+      iam             = optional(string)
+    }))
+  }))
+
+  default     = []
+  description = "A list of definitions to attach EFS volumes to the ECS task. Name and file_system_id are required."
+}
+
 variable "task_role_arn" {
   default     = ""
   description = "The arn of the iam role you wish to pass to the ecs task containers."
